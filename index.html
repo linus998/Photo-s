@@ -125,12 +125,12 @@
     <div class="about-container">
         <div class="about-text">
             <h2>About Me</h2>
-            <p>I'm a passionate photographer dedicated to capturing the beauty of life through my lens. With over 10 years of experience, I specialize in landscape, portrait, and architectural photography.</p>
+            <p>I'm a passionate photographer dedicated to capturing the beauty of life through my lens. I specialize in sport, portrait, and nature photography.</p>
             <p>My approach combines technical excellence with artistic vision, creating images that tell compelling stories and evoke genuine emotions.</p>
             <p>Every photograph is an opportunity to freeze a moment in time, preserving memories that will last forever.</p>
         </div>
         <div class="about-image">
-            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=800&fit=crop" alt="Photographer portrait">
+            <img src="https://i.ibb.co/DP41tKD7/CV-pic.jpg" alt="Photographer portrait">
         </div>
     </div>
 </section>
@@ -159,17 +159,15 @@
 <!-- Footer -->
 <footer>
     <div class="social-links">
-        <a href="#">Instagram</a>
-        <a href="#">Behance</a>
-        <a href="#">Flickr</a>
+        <a href="https://www.instagram.com/linusbeheydt?igsh=MTdvN2VidXNwMGN5Zw==">Instagram</a>
     </div>
     <p>&copy; <span id="year"></span> Fotografie. All rights reserved.</p>
 </footer>
 
 <script>
 /* ==================  CONFIG  ================== */
-const GITHUB_USER  = 'YOUR_GITHUB_USER';      // ← change
-const GITHUB_REPO  = 'YOUR_REPO_NAME';        // ← change
+const GITHUB_USER  = 'linus998';      // ← change
+const GITHUB_REPO  = 'Photo-s';        // ← change
 const GALLERY_ROOT = 'gallery';               // ← change if you name it differently
 /* ============================================== */
 
@@ -197,7 +195,7 @@ document.querySelector('.contact-form').addEventListener('submit', e => {
     alert('Thank you for your message! I will get back to you soon.');
     e.target.reset();
 });
-document.getElementById('year').textContent = new Date().getFullYear();
+document.getElementById('').textContent = new Date().getFull();
 
 /* --------  gallery builder  -------- */
 fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${GALLERY_ROOT}`)
@@ -246,4 +244,5 @@ document.addEventListener('keydown', e => {
 });
 </script>
 </body>
+
 </html>
