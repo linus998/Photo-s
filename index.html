@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photography Portfolio</title>
+    <style>
+        /* ----------  your original styles (unchanged)  ---------- */
+        :root{--primary-color:#1a1a1a;--secondary-color:#fff;--accent-color:#666;--transition:all .3s cubic-bezier(.4,0,.2,1)}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,sans-serif;background:var(--secondary-color);color:var(--primary-color);line-height:1.6;overflow-x:hidden}
+        nav{position:fixed;top:0;width:100%;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);z-index:1000;padding:1.5rem 5%;transition:var(--transition)}
+        nav.scrolled{padding:1rem 5%;box-shadow:0 2px 20px rgba(0,0,0,.1)}
+        .nav-container{display:flex;justify-content:space-between;align-items:center;max-width:1400px;margin:0 auto}
+        .logo{font-size:1.5rem;font-weight:300;letter-spacing:2px;text-transform:uppercase;opacity:0;animation:fadeInDown 1s ease forwards}
+        .nav-links{display:flex;gap:2rem;list-style:none}
+        .nav-links a{text-decoration:none;color:var(--primary-color);font-weight:300;letter-spacing:1px;transition:var(--transition);position:relative;opacity:0;animation:fadeInDown 1s ease forwards;animation-delay:.2s}
+        .nav-links a::after{content:"";position:absolute;bottom:-5px;left:0;width:0;height:1px;background:var(--primary-color);transition:var(--transition)}
+        .nav-links a:hover::after{width:100%}
+        .hero{height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+        .hero-content{text-align:center;z-index:2}
+        .hero h1{font-size:clamp(3rem,8vw,6rem);font-weight:200;letter-spacing:3px;margin-bottom:1rem;opacity:0;animation:fadeInUp 1s ease forwards;animation-delay:.5s}
+        .hero p{font-size:1.2rem;color:var(--accent-color);margin-bottom:2rem;opacity:0;animation:fadeInUp 1s ease forwards;animation-delay:.7s}
+        .cta-button{display:inline-block;padding:1rem 2.5rem;background:var(--primary-color);color:var(--secondary-color);text-decoration:none;letter-spacing:1px;transition:var(--transition);opacity:0;animation:fadeInUp 1s ease forwards;animation-delay:.9s}
+        .cta-button:hover{background:var(--accent-color);transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,0,0,.2)}
+        .gallery{padding:5rem 5%;max-width:1400px;margin:0 auto}
+        .section-title{font-size:2.5rem;font-weight:300;text-align:center;margin-bottom:3rem;letter-spacing:2px;opacity:0;transform:translateY(30px);transition:var(--transition)}
+        .section-title.visible{opacity:1;transform:translateY(0)}
+        .gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem}
+        .gallery-item{position:relative;overflow:hidden;aspect-ratio:1;cursor:pointer;opacity:0;transform:scale(.9);transition:var(--transition)}
+        .gallery-item.visible{opacity:1;transform:scale(1)}
+        .gallery-item img{width:100%;height:100%;object-fit:cover;transition:var(--transition)}
+        .gallery-item:hover img{transform:scale(1.1)}
+        .gallery-overlay{position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;opacity:0;transition:var(--transition)}
+        .gallery-item:hover .gallery-overlay{opacity:1}
+        .overlay-text{color:#fff;text-align:center;transform:translateY(20px);transition:var(--transition)}
+        .gallery-item:hover .overlay-text{transform:translateY(0)}
+        .overlay-text h3{font-size:1.5rem;font-weight:300;margin-bottom:.5rem}
+        .overlay-text p{font-size:.9rem;color:rgba(255,255,255,.8)}
+        .about{padding:5rem 5%;background:#f5f5f5}
+        .about-container{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+        .about-text{opacity:0;transform:translateX(-30px);transition:var(--transition)}
+        .about-text.visible{opacity:1;transform:translateX(0)}
+        .about-text h2{font-size:2rem;font-weight:300;margin-bottom:1.5rem;letter-spacing:1px}
+        .about-text p{color:var(--accent-color);margin-bottom:1rem}
+        .about-image{position:relative;opacity:0;transform:translateX(30px);transition:var(--transition)}
+        .about-image.visible{opacity:1;transform:translateX(0)}
+        .about-image img{width:100%;height:auto;filter:grayscale(100%);transition:var(--transition)}
+        .about-image:hover img{filter:grayscale(0)}
+        .contact{padding:5rem 5%;text-align:center;max-width:800px;margin:0 auto}
+        .contact-form{margin-top:2rem;opacity:0;transform:translateY(30px);transition:var(--transition)}
+        .contact-form.visible{opacity:1;transform:translateY(0)}
+        .form-group{margin-bottom:1.5rem;text-align:left}
+        .form-group label{display:block;margin-bottom:.5rem;font-weight:300;letter-spacing:1px}
+        .form-group input,.form-group textarea{width:100%;padding:1rem;border:1px solid #ddd;background:transparent;font-family:inherit;transition:var(--transition)}
+        .form-group input:focus,.form-group textarea:focus{outline:none;border-color:var(--primary-color)}
+        .submit-button{background:var(--primary-color);color:var(--secondary-color);border:none;padding:1rem 3rem;cursor:pointer;letter-spacing:1px;transition:var(--transition)}
+        .submit-button:hover{background:var(--accent-color);transform:translateY(-2px)}
+        footer{padding:2rem 5%;text-align:center;border-top:1px solid #eee}
+        .social-links{display:flex;justify-content:center;gap:2rem;margin-bottom:1rem}
+        .social-links a{color:var(--accent-color);font-size:1.2rem;transition:var(--transition)}
+        .social-links a:hover{color:var(--primary-color)}
+        @keyframes fadeInUp{to{opacity:1;transform:translateY(0)}}
+        @keyframes fadeInDown{to{opacity:1;transform:translateY(0)}}
+        @media(max-width:768px){.nav-links{display:none}.about-container{grid-template-columns:1fr;gap:2rem}.gallery-grid{grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem}}
+        .loader{position:fixed;inset:0;background:var(--secondary-color);display:flex;align-items:center;justify-content:center;z-index:9999;transition:opacity .5s ease}
+        .loader.hidden{opacity:0;pointer-events:none}
+        .loader-circle{width:50px;height:50px;border:2px solid #f3f3f3;border-top:2px solid var(--primary-color);border-radius:50%;animation:spin 1s linear infinite}
+        @keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+
+        /* ----------  light-box styles (new)  ---------- */
+        .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.9);display:none;place-items:center;z-index:3000;grid-template-areas:"stack"}
+        .lightbox img{max-width:90%;max-height:90%;grid-area:stack}
+        .lightbox .close{position:absolute;top:20px;right:40px;font-size:40px;color:#fff;cursor:pointer}
+        .lightbox #prev,.lightbox #next{position:absolute;top:50%;color:#fff;font-size:40px;cursor:pointer;user-select:none;transform:translateY(-50%)}
+        .lightbox #prev{left:40px}
+        .lightbox #next{right:40px}
+        #caption{color:#ccc;text-align:center;padding:10px}
+    </style>
+</head>
+<body>
+
+<!-- Loader -->
+<div class="loader" id="loader"><div class="loader-circle"></div></div>
+
+<!-- Navigation -->
+<nav id="navbar">
+    <div class="nav-container">
+        <div class="logo">FOTOGRAFIE</div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="home">
+    <div class="hero-content">
+        <h1>Visual Stories</h1>
+        <p>Capturing moments that last forever</p>
+        <a href="#gallery" class="cta-button">View Portfolio</a>
+    </div>
+</section>
+
+<!-- Gallery (now data-driven) -->
+<section class="gallery" id="gallery">
+    <h2 class="section-title">Featured Work</h2>
+    <div class="gallery-grid" id="galleryGrid"></div>
+</section>
+
+<!-- Light-box viewer -->
+<div id="lightbox" class="lightbox">
+    <span class="close">&times;</span>
+    <img id="lightboxImg" src="" alt="">
+    <a id="prev">&#10094;</a>
+    <a id="next">&#10095;</a>
+    <div id="caption"></div>
+</div>
+
+<!-- About -->
+<section class="about" id="about">
+    <div class="about-container">
+        <div class="about-text">
+            <h2>About Me</h2>
+            <p>I'm a passionate photographer dedicated to capturing the beauty of life through my lens. With over 10 years of experience, I specialize in landscape, portrait, and architectural photography.</p>
+            <p>My approach combines technical excellence with artistic vision, creating images that tell compelling stories and evoke genuine emotions.</p>
+            <p>Every photograph is an opportunity to freeze a moment in time, preserving memories that will last forever.</p>
+        </div>
+        <div class="about-image">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=800&fit=crop" alt="Photographer portrait">
+        </div>
+    </div>
+</section>
+
+<!-- Contact -->
+<section class="contact" id="contact">
+    <h2 class="section-title">Get In Touch</h2>
+    <p>I'd love to hear about your project and discuss how we can work together.</p>
+    <form class="contact-form">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+        </div>
+        <button type="submit" class="submit-button">Send Message</button>
+    </form>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="social-links">
+        <a href="#">Instagram</a>
+        <a href="#">Behance</a>
+        <a href="#">Flickr</a>
+    </div>
+    <p>&copy; <span id="year"></span> Fotografie. All rights reserved.</p>
+</footer>
+
+<script>
+/* ==================  CONFIG  ================== */
+const GITHUB_USER  = 'YOUR_GITHUB_USER';      // ← change
+const GITHUB_REPO  = 'YOUR_REPO_NAME';        // ← change
+const GALLERY_ROOT = 'gallery';               // ← change if you name it differently
+/* ============================================== */
+
+const grid        = document.getElementById('galleryGrid');
+const lightbox    = document.getElementById('lightbox');
+const lbImg       = document.getElementById('lightboxImg');
+const caption     = document.getElementById('caption');
+const prevBtn     = document.getElementById('prev');
+const nextBtn     = document.getElementById('next');
+let   currentSet  = [];
+let   currentIdx  = 0;
+
+/* --------  original behaviour kept -------- */
+window.addEventListener('load', () => setTimeout(() => loader.classList.add('hidden'), 1000));
+window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 50));
+document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
+    e.preventDefault();
+    document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}));
+document.querySelectorAll('.section-title, .gallery-item, .about-text, .about-image, .contact-form').forEach(el => {
+    new IntersectionObserver((e, o) => e.forEach(x => x.isIntersecting && x.target.classList.add('visible')), { threshold: .1, rootMargin: '0px 0px -50px 0px' }).observe(el);
+});
+document.querySelector('.contact-form').addEventListener('submit', e => {
+    e.preventDefault();
+    alert('Thank you for your message! I will get back to you soon.');
+    e.target.reset();
+});
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* --------  gallery builder  -------- */
+fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${GALLERY_ROOT}`)
+    .then(r => r.json())
+    .then(folders => {
+        folders.forEach(folder => {
+            if (folder.type !== 'dir') return;
+            fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${folder.path}`)
+                .then(r => r.json())
+                .then(images => {
+                    images = images.filter(f => /\.(jpg|jpeg|png|webp|gif)$/i.test(f.name))
+                                   .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
+                    if (!images.length) return;
+                    const first = images[0];
+                    const tile  = document.createElement('div');
+                    tile.className = 'gallery-item visible';
+                    tile.innerHTML = `
+                        <img src="${first.download_url}" alt="${folder.name}">
+                        <div class="gallery-overlay">
+                            <div class="overlay-text">
+                                <h3>${folder.name.replace(/[-_]/g, ' ')}</h3>
+                                <p>${images.length} photos</p>
+                            </div>
+                        </div>`;
+                    tile.addEventListener('click', () => openGallery(images, 0));
+                    grid.appendChild(tile);
+                });
+        });
+    });
+
+/* --------  light-box  -------- */
+function openGallery(set, idx) {
+    currentSet = set; currentIdx = idx;
+    lbImg.src  = set[idx].download_url;
+    caption.textContent = `${idx + 1} / ${set.length}`;
+    lightbox.style.display = 'grid';
+}
+document.querySelector('.close').onclick = () => lightbox.style.display = 'none';
+nextBtn.onclick = () => { currentIdx = (currentIdx + 1) % currentSet.length; openGallery(currentSet, currentIdx); };
+prevBtn.onclick = () => { currentIdx = (currentIdx - 1 + currentSet.length) % currentSet.length; openGallery(currentSet, currentIdx); };
+document.addEventListener('keydown', e => {
+    if (lightbox.style.display !== 'grid') return;
+    if (e.key === 'ArrowRight') nextBtn.click();
+    if (e.key === 'ArrowLeft') prevBtn.click();
+    if (e.key === 'Escape') document.querySelector('.close').click();
+});
+</script>
+</body>
+</html>
